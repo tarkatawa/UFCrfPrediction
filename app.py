@@ -1,7 +1,9 @@
 from operator import itemgetter
 
 from flask import Flask, jsonify, request
+
 from .random_forest import pretrain_model, random_forest
+
 
 # initial bootstrap, define app, pretrain model, and reuse the RF instance as global variable
 def create_app():
@@ -14,6 +16,7 @@ def create_app():
 
     # with app context, do...
     with app.app_context():
+
         @app.route("/")
         def hello():
             return jsonify(status="success", message="Hello, World!")
@@ -30,8 +33,24 @@ def create_app():
         @app.route("/predict", methods=["POST"])
         def predict():
             # fetch from request body
-            red_fighter, blue_fighter, red_odds, blue_odds, better_rank, number_of_rounds = itemgetter("redFighter", "blueFighter", "redOdds", "blueOdds", "betterRank", "numberOfRounds")(request.json)
-            
+            (
+                red_fighter,
+                blue_fighter,
+                red_odds,
+                blue_odds,
+                better_rank,
+                number_of_rounds,
+            ) = itemgetter(
+                "redFighter",
+                "blueFighter",
+                "redOdds",
+                "blueOdds",
+                "betterRank",
+                "numberOfRounds",
+            )(
+                request.json
+            )
+
             # make prediction based on the trained model
             result = random_forest(
                 red_fighter=red_fighter,
@@ -46,12 +65,12 @@ def create_app():
 
             # encapsulate input in nested json
             input = {
-                'redFighter': red_fighter,
-                'blueFighter': blue_fighter,
-                'redOdds': red_odds,
-                'blueOdds': blue_odds,
-                'betterRank': better_rank,
-                'numberOfRounds': number_of_rounds,
+                "redFighter": red_fighter,
+                "blueFighter": blue_fighter,
+                "redOdds": red_odds,
+                "blueOdds": blue_odds,
+                "betterRank": better_rank,
+                "numberOfRounds": number_of_rounds,
             }
 
             # return data as json, this will be read by the android app
@@ -60,6 +79,7 @@ def create_app():
     # return app instance
     return app
 
+
 # in startup, start the 'create_app' function
-if __name__ =="__main__":
+if __name__ == "__main__":
     create_app()
