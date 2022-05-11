@@ -1,8 +1,15 @@
 from operator import itemgetter
 
 from flask import Flask, jsonify, request
-from .random_forest import random_forest
+from .random_forest import pretrain_model, random_forest
 
+# initial bootstrap, define app, pretrain model, and reuse the RF instance as global variable
+print("Training models, please wait before the app starts...")
+rf, data, accuracy = pretrain_model()
+print("Model has been successfully pretrained!")
+
+# start Flask app
+print ("Starting Flask app...")
 app = Flask(__name__)
 
 @app.route("/")
@@ -30,7 +37,9 @@ def predict():
         red_odds=red_odds,
         blue_odds=blue_odds,
         better_rank=better_rank,
-        number_of_rounds=number_of_rounds
+        number_of_rounds=number_of_rounds,
+        rf=rf,
+        data=data,
     )
 
     # encapsulate input in nested json
@@ -44,4 +53,4 @@ def predict():
     }
 
     # return data as json, this will be read by the android app
-    return jsonify(prediction=result, input=input)
+    return jsonify(prediction=result, input=input, accuracy=accuracy)
