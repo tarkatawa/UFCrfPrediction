@@ -222,7 +222,7 @@ def create_app():
         #     "genderFighter": "Male",
         #     "weightFighter": "Featherweight"
         # }
-        @app.route("/fighters", methods=["GET"])
+        @app.route("/fighters", methods=["POST"])
         def get_fighters():
             (
                 gender_fighter,
