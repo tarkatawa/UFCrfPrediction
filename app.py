@@ -217,6 +217,89 @@ def create_app():
             # return data as json, this will be read by the android app
             return jsonify(prediction=result, input=input, accuracy=accuracy)
 
+        # Expected request body:
+        # {
+        #     "genderFighter": "Male",
+        #     "weightFighter": "Featherweight"
+        # }
+        @app.route("/fighters", methods=["GET"])
+        def get_fighters():
+            (
+                gender_fighter,
+                weight_fighter
+            ) = itemgetter(
+                "genderFighter",
+                "weightFighter",
+            )(
+                request.json
+            )
+
+            # Logic to get fighters based on class
+            list_fighters = set()
+            if gender_fighter == "Male":
+                if weight_fighter == "Flyweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Flyweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Bantamweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Bantamweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Featherweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Featherweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Lightweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Lightweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Welterweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Welterweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Middleweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Middleweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Light Heavyweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Light Heavyweight":
+                            list_fighters.add(row['R_fighter'])
+
+                else:
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Heavyweight":
+                            list_fighters.add(row['R_fighter'])
+
+            else:
+                if weight_fighter == "Strawweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Women's Strawweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Flyweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Women's Flyweight":
+                            list_fighters.add(row['R_fighter'])
+
+                elif weight_fighter == "Bantamweight":
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Women's Bantamweight":
+                            list_fighters.add(row['R_fighter'])
+
+                else:
+                    for _, row in data.iterrows():
+                        if row["weight_class"] == "Women's Featherweight":
+                            list_fighters.add(row['R_fighter'])
+            
+            return jsonify(list_fighters=list(list_fighters))
+
     # return app instance
     return app
 
