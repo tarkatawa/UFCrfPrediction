@@ -301,7 +301,7 @@ def create_app():
             return jsonify(list_fighters=list(list_fighters))
         
         @app.route("/fighters2", methods=["POST"])
-        def get_fighters():
+        def get_fighters_dua():
             (
                 gender_fighter,
                 weight_fighter
