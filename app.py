@@ -165,9 +165,9 @@ def create_app():
 
         # Expected request body:
         # {
-        #     "name": "Brandon Moreno"
+        #     "nameFighter": "Brandon Moreno"
         # }
-        @app.route("/weightclass")
+        @app.route("/weightclass", methods=["POST"])
         def weightclassflw():
             # fetch from request body
             (
