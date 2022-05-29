@@ -162,6 +162,91 @@ def create_app():
         def hello():
             return jsonify(status="success", message="Hello, World!")
 
+
+        # Expected request body:
+        # {
+        #     "name": "Brandon Moreno"
+        # }
+        @app.route("/weightclass")
+        def weightclassflw():
+            # fetch from request body
+            (
+                name_fighter
+            ) = itemgetter(
+                "nameFighter"
+            )(
+                request.json
+            )
+
+            # Get fighter names to face
+            flyweights = []
+
+            for _, j in data.iterrows():
+                if(j[6] == "Flyweight"):
+                    flyweights.append(j[1])
+                    flyweights.append(j[2])
+                else:
+                    continue
+
+            flyweights = list(dict.fromkeys(flyweights))
+            flyweightsResult = []
+
+            fightInfo = [-110, -110, 3, 2]
+            statsFighter = []            
+
+            # find stats of inputted fighter
+            for _, j in data.iterrows():
+                if(name_fighter == j[1]):
+                    fighterGender = j[7]
+                    for m in range(34, 57):
+                        statsFighter.append(j[m])
+                    fightInfo.extend(statsFighter)
+                    break
+                elif(name_fighter == j[2]):
+                    fighterGender = j[7]
+                    for n in range(11, 34):
+                        statsFighter.append(j[n])
+                    fightInfo.extend(statsFighter)
+                    break
+                else:
+                    continue
+
+            temp = fightInfo            
+            if (name_fighter in flyweights):
+                flyweights.remove(name_fighter)
+            
+            # predict inputted fighter vs all flyweights
+            if fighterGender == "MALE":
+                for fighter in flyweights:
+                    for _, j in data.iterrows():
+                        if(fighter == j[1]):
+                            for m in range(34, 57):
+                                temp.append(j[m])
+                            break
+                        elif(fighter == j[2]):
+                            for n in range(11, 34):
+                                temp.append(j[n])
+                            break
+                        else:
+                            continue
+                    #Predict
+                    fight_pred = rf.predict([temp])
+
+                    #Input to results
+                    flyweightsResult.append(fight_pred[0])
+
+                    #Set temp back to default
+                    temp.clear()
+                    temp = [-110, -110, 3, 2]
+                    temp.extend(statsFighter)
+
+                #count percentage
+                flyweightPct = flyweightsResult.count('Red') / len(flyweightsResult)
+                print(flyweightPct)
+
+                return jsonify(flyweightPct = flyweightPct)         
+
+
         # Expected request body:
         # {
         #     "redFighter": "Dustin Poirier",
