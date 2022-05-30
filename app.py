@@ -244,7 +244,7 @@ def create_app():
                 flyweightPct = flyweightsResult.count('Red') / len(flyweightsResult)
                 print(flyweightPct)
 
-                return jsonify(flyweightPct = flyweightPct)         
+            return jsonify(flyweightPct = flyweightPct)         
 
 
         # Expected request body:
