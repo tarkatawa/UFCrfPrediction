@@ -166,33 +166,108 @@ def create_app():
         # Expected request body:
         # {
         #     "nameFighter": "Brandon Moreno"
+        #     "weightClass": "Flyweight"
         # }
         @app.route("/weightclass", methods=["POST"])
-        def weightclassflw():
+        def weightclass():
             # fetch from request body
             (
-                name_fighter
+                name_fighter,
+                weight_chosen
             ) = itemgetter(
-                "nameFighter"
+                "nameFighter",
+                "weightChosen"
+
             )(
                 request.json
             )
 
             # Get fighter names to face
+            # Mens
             flyweights = []
+            bantamweights = []
+            featherweights = []
+            lightweights = []
+            welterweights = []
+            middleweights = []
+            lightheavyweights = []
+            heavyweights = []
+
+            # Womens
+            wmstrawweights = []
+            wmflyweights = []
+            wmbantamweights = []
+            wmfeatherweights = []
 
             for _, j in data.iterrows():
                 if(j[6] == "Flyweight"):
                     flyweights.append(j[1])
                     flyweights.append(j[2])
+                elif(j[6] == "Bantamweight"):
+                    bantamweights.append(j[1])
+                    bantamweights.append(j[2])
+                elif(j[6] == "Featherweight"):
+                    featherweights.append(j[1])
+                    featherweights.append(j[2])
+                elif(j[6] == "Lightweight"):
+                    lightweights.append(j[1])
+                    lightweights.append(j[2])
+                elif(j[6] == "Welterweight"):
+                    welterweights.append(j[1])
+                    welterweights.append(j[2])
+                elif(j[6] == "Middleweight"):
+                    middleweights.append(j[1])
+                    middleweights.append(j[2])
+                elif(j[6] == "Light Heavyweight"):
+                    lightheavyweights.append(j[1])
+                    lightheavyweights.append(j[2])
+                elif(j[6] == "Heavyweight"):
+                    heavyweights.append(j[1])
+                    heavyweights.append(j[2])
+                elif(j[6] == "Women's Strawweight"):
+                    wmstrawweights.append(j[1])
+                    wmstrawweights.append(j[2])
+                elif(j[6] == "Women's Flyweight"):
+                    wmflyweights.append(j[1])
+                    wmflyweights.append(j[2])
+                elif(j[6] == "Women's Bantamweight"):
+                    wmbantamweights.append(j[1])
+                    wmbantamweights.append(j[2])
+                elif(j[6] == "Women's Featherweight"):
+                    wmfeatherweights.append(j[1])
+                    wmfeatherweights.append(j[2])  
                 else:
                     continue
 
             flyweights = list(dict.fromkeys(flyweights))
+            bantamweights = list(dict.fromkeys(bantamweights))
+            featherweights = list(dict.fromkeys(featherweights))
+            lightweights = list(dict.fromkeys(lightweights))
+            welterweights = list(dict.fromkeys(welterweights))
+            middleweights = list(dict.fromkeys(middleweights))
+            lightheavyweights = list(dict.fromkeys(lightheavyweights))
+            heavyweights = list(dict.fromkeys(heavyweights))
+            wmstrawweights = list(dict.fromkeys(wmstrawweights))
+            wmflyweights = list(dict.fromkeys(wmflyweights))
+            wmbantamweights = list(dict.fromkeys(wmbantamweights))
+            wmfeatherweights = list(dict.fromkeys(wmfeatherweights))
+
             flyweightsResult = []
+            bantamweightsResult = []
+            featherweightsResult = []
+            lightweightsResult = []
+            welterweightsResult = []
+            middleweigthsResult = []
+            lightheavyweightsResult = []
+            heavyweightsResult = []
+
+            wmstrawweightResult = []
+            wmflyweightsResult = []
+            wmbantamweightsResult = []
+            wmfeatherweightsResult = []       
 
             fightInfo = [-110, -110, 3, 2]
-            statsFighter = []            
+            statsFighter = []
 
             # find stats of inputted fighter
             for _, j in data.iterrows():
@@ -214,35 +289,58 @@ def create_app():
             temp = fightInfo            
             if (name_fighter in flyweights):
                 flyweights.remove(name_fighter)
+            if (name_fighter in bantamweights):
+                bantamweights.remove(name_fighter)
+            if (name_fighter in featherweights):
+                featherweights.remove(name_fighter)
+            if (name_fighter in lightweights):
+                lightweights.remove(name_fighter)
+            if (name_fighter in welterweights):
+                welterweights.remove(name_fighter)
+            if (name_fighter in middleweights):
+                middleweights.remove(name_fighter)
+            if (name_fighter in lightheavyweights):  
+                lightheavyweights.remove(name_fighter)
+            if (name_fighter in heavyweights):
+                heavyweights.remove(name_fighter)
+            if (name_fighter in wmstrawweights):
+                wmstrawweights.remove(name_fighter)
+            if (name_fighter in wmflyweights):  
+                wmflyweights.remove(name_fighter)
+            if (name_fighter in wmbantamweights):  
+                wmbantamweights.remove(name_fighter)
+            if (name_fighter in wmfeatherweights):  
+                wmfeatherweights.remove(name_fighter)
             
+            if weight_chosen == "Flyweight":
             # predict inputted fighter vs all flyweights
-            if fighterGender == "MALE":
-                for fighter in flyweights:
-                    for _, j in data.iterrows():
-                        if(fighter == j[1]):
-                            for m in range(34, 57):
-                                temp.append(j[m])
-                            break
-                        elif(fighter == j[2]):
-                            for n in range(11, 34):
-                                temp.append(j[n])
-                            break
-                        else:
-                            continue
-                    #Predict
-                    fight_pred = rf.predict([temp])
+                if fighterGender == "MALE":
+                    for fighter in flyweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
 
-                    #Input to results
-                    flyweightsResult.append(fight_pred[0])
+                        #Input to results
+                        flyweightsResult.append(fight_pred[0])
 
-                    #Set temp back to default
-                    temp.clear()
-                    temp = [-110, -110, 3, 2]
-                    temp.extend(statsFighter)
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
 
-                #count percentage
-                flyweightPct = flyweightsResult.count('Red') / len(flyweightsResult)
-                print(flyweightPct)
+                    #count percentage
+                    flyweightPct = flyweightsResult.count('Red') / len(flyweightsResult)
+                    print(flyweightPct)
 
             return jsonify(flyweightPct = flyweightPct)         
 
