@@ -257,7 +257,7 @@ def create_app():
             featherweightsResult = []
             lightweightsResult = []
             welterweightsResult = []
-            middleweigthsResult = []
+            middleweightsResult = []
             lightheavyweightsResult = []
             heavyweightsResult = []
 
@@ -341,8 +341,240 @@ def create_app():
                     #count percentage
                     flyweightPct = flyweightsResult.count('Red') / len(flyweightsResult)
                     print(flyweightPct)
+                return jsonify(flyweightPct = flyweightPct)  
+                
+            if weight_chosen == "Bantamweight":
+            # predict inputted fighter vs all flyweights
+                if fighterGender == "MALE":
+                    for fighter in bantamweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
 
-            return jsonify(flyweightPct = flyweightPct)         
+                        #Input to results
+                        bantamweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    bantamweightPct = bantamweightsResult.count('Red') / len(bantamweightsResult)
+                    print(bantamweightPct)                
+
+                return jsonify(flyweightPct = bantamweightPct)         
+
+            # Featherweight
+            if weight_chosen == "Featherweight":
+            # predict inputted fighter vs all bantamweights
+                if fighterGender == "MALE":
+                    for fighter in featherweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        featherweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    featherweightPct = featherweightsResult.count('Red') / len(featherweightsResult)
+                    print(featherweightPct)
+                return jsonify(flyweightPct = featherweightPct)
+
+            # Lightweight
+            if weight_chosen == "Lightweight":
+            # predict inputted fighter vs all featherweights
+                if fighterGender == "MALE":
+                    for fighter in lightweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        lightweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    lightweightPct = lightweightsResult.count('Red') / len(lightweightsResult)
+                    print(lightweightPct)
+                return jsonify(flyweightPct = lightweightPct)
+
+            # Welterweight
+            if weight_chosen == "Welterweight":
+            # predict inputted fighter vs all featherweights
+                if fighterGender == "MALE":
+                    for fighter in welterweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        welterweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    welterweightPct = welterweightsResult.count('Red') / len(welterweightsResult)
+                    print(welterweightPct)
+                return jsonify(flyweightPct = welterweightPct)            
+
+            # Middleweight
+            if weight_chosen == "Middleweight":
+            # predict inputted fighter vs all featherweights
+                if fighterGender == "MALE":
+                    for fighter in middleweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        middleweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    middleweightPct = middleweightsResult.count('Red') / len(middleweightsResult)
+                    print(middleweightPct)
+                return jsonify(flyweightPct = middleweightPct)  
+
+            # Light Heavyweight
+            if weight_chosen == "Lightheavyweight":
+            # predict inputted fighter vs all featherweights
+                if fighterGender == "MALE":
+                    for fighter in lightheavyweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        lightheavyweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    lightheavyweightPct = lightheavyweightsResult.count('Red') / len(lightheavyweightsResult)
+                    print(lightheavyweightPct)
+                return jsonify(flyweightPct = lightheavyweightPct)  
+
+            # Heavyweight
+            if weight_chosen == "Heavyweight":
+            # predict inputted fighter vs all featherweights
+                if fighterGender == "MALE":
+                    for fighter in heavyweights:
+                        for _, j in data.iterrows():
+                            if(fighter == j[1]):
+                                for m in range(34, 57):
+                                    temp.append(j[m])
+                                break
+                            elif(fighter == j[2]):
+                                for n in range(11, 34):
+                                    temp.append(j[n])
+                                break
+                            else:
+                                continue
+                        #Predict
+                        fight_pred = rf.predict([temp])
+
+                        #Input to results
+                        heavyweightsResult.append(fight_pred[0])
+
+                        #Set temp back to default
+                        temp.clear()
+                        temp = [-110, -110, 3, 2]
+                        temp.extend(statsFighter)
+
+                    #count percentage
+                    heavyweightPct = heavyweightsResult.count('Red') / len(heavyweightsResult)
+                    print(heavyweightPct)
+                return jsonify(flyweightPct = heavyweightPct) 
+
+            # wmStrawweight
+
+            # wmFlyweight
+
+            # wmBantamweight
+
+            # wmFeatherweight
+
 
 
         # Expected request body:
