@@ -791,7 +791,7 @@ def create_app():
                         if row["weight_class"] == "Women's Featherweight":
                             list_fighters.add(row['R_fighter'])
             
-            return jsonify(list_fighters2=list(list_fighters))
+            return jsonify(list_fighters2=sorted(list(list_fighters)))
 
     # return app instance
     return app
