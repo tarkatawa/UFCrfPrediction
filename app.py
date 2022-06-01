@@ -713,7 +713,7 @@ def create_app():
                         if row["weight_class"] == "Women's Featherweight":
                             list_fighters.add(row['R_fighter'])
             
-            return jsonify(list_fighters=list(list_fighters))
+            return jsonify(list_fighters=sorted(list(list_fighters)))
         
         @app.route("/fighters2", methods=["POST"])
         def get_fighters_dua():
