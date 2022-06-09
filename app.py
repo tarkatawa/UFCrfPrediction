@@ -162,6 +162,32 @@ def create_app():
         def hello():
             return jsonify(status="success", message="Hello, World!")
 
+        
+        @app.route("/statistics", methods=["POST"])
+        def statistics():
+            # fetch from request body
+            (
+                name_fighter
+            ) = itemgetter(
+                "nameFighter"
+            )(
+                request.json
+            )
+            for _, row in data.iterrows():
+                if row["R_fighter"] == name_fighter:
+                    heightFighter = row["R_Height_cms"]
+                    reachFighter = row["R_Reach_cms"]
+                    ageFighter = row["R_age"]
+                    winsFighter = row["R_wins"]
+                    lossFighter = row["R_losses"]
+                    return jsonify(heightFighter=heightFighter, reachFighter=reachFighter, ageFighter=ageFighter, winsFighter=winsFighter, lossFighter=lossFighter)
+                elif row["B_fighter"] == name_fighter:
+                    heightFighter = row["B_Height_cms"]
+                    reachFighter = row["B_Reach_cms"]
+                    ageFighter = row["B_age"]
+                    winsFighter = row["B_wins"]
+                    lossFighter = row["B_losses"]
+                    return jsonify(heightFighter=heightFighter, reachFighter=reachFighter, ageFighter=ageFighter, winsFighter=winsFighter, lossFighter=lossFighter)
 
         # Expected request body:
         # {
